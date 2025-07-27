@@ -1,4 +1,4 @@
-import css from "./NotFound.module.css";
+import css from "./NotFoundPage.module.css";
 
 const NotFound = ({ onRetry }) => {
   const handleClick = () => {
@@ -16,9 +16,7 @@ const NotFound = ({ onRetry }) => {
           ✕
         </button>
         <p className={css.title}>Error</p>
-        <p className={css.message}>
-          Auto not found. It may have been deleted.
-        </p>
+        <p className={css.message}>Auto not found. It may have been deleted.</p>
         <button className={css.backButton} onClick={handleClick}>
           Retry
         </button>
