@@ -74,10 +74,12 @@ textarea {
 
 /* Cursor for buttons */
 button {
-  color: var(--button);
+  background-color: var(--button);
+  color: #fff;
+  transition: background-color 0.3s ease;
 }
 
-button:hover{color: var(--button-hover);}
+button:hover{background-color: var(--button-hover);}
 /* Images responsive by default */
 img {
   max-width: 100%;
