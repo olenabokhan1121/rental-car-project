@@ -1,0 +1,10 @@
+.inlineText {
+  display: flex;
+  gap: 12px;
+}
+
+.inlineText span:not(:last-child)::after {
+  content: "|";
+  margin-left: 12px;
+  color: #999;
+}

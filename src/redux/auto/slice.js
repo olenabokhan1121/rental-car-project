@@ -1,8 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  fetchAuto,
-  toggleFavoriteAutoAsync,
-} from "./operations";
+import { fetchAuto, toggleFavoriteAutoAsync } from "./operations.js";
 
 const initialState = {
   items: [],
@@ -24,11 +21,11 @@ const autoSlice = createSlice({
         auto.isFavorite = add;
       }
     },
-    
+
     clearNotFound: (state) => {
       state.notFound = false;
     },
-    
+
     clearAuto: (state) => {
       state.items = [];
       state.totalItems = 0;
@@ -44,8 +41,8 @@ const autoSlice = createSlice({
         state.error = null;
         state.notFound = false;
       })
+
       .addCase(fetchAuto.fulfilled, (state, action) => {
-       
         const { items, totalItems, append } = action.payload;
 
         state.items = append
@@ -66,35 +63,28 @@ const autoSlice = createSlice({
         state.error = action.payload || action.error.message;
       })
 
-      
       .addCase(toggleFavoriteAutoAsync.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
+
       .addCase(toggleFavoriteAutoAsync.fulfilled, (state, action) => {
-        const { autoId, add, mode } = action.payload;
-        if (mode === "favorites" && !add) {
-          state.items = state.items.filter((auto) => auto.id !== autoId);
-          state.totalItems -= 1;
+        const { autoId, add } = action.payload;
+        if (add) {
+          state.favorites.push(autoId);
         } else {
-          const auto = state.items.find((veh) => veh.id === autoId);
-          if (auto) {
-            auto.isFavorite = add;
-          }
+          state.favorites = state.favorites.filter((id) => id !== autoId);
         }
         state.loading = false;
       })
       .addCase(toggleFavoriteAutoAsync.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || action.error.message;
-      })
+      });
   },
 });
 
-export const {
-  toggleFavoriteAuto,
-  clearNotFound,
-  clearAuto,
-} = autoSlice.actions;
+export const { toggleFavoriteAuto, clearNotFound, clearAuto } =
+  autoSlice.actions;
 
 export const autoReducer = autoSlice.reducer;
