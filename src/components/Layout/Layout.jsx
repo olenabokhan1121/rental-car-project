@@ -3,15 +3,13 @@ import { Suspense } from "react";
 
 import Header from "../Header/Header";
 
-
 export const Layout = ({ children }) => {
   return (
-    <div>
+    <div className={css.container}>
       <Header />
-      <main className={css.container}>
+      <main>
         <Suspense fallback={null}>{children}</Suspense>
       </main>
-      
     </div>
   );
 };

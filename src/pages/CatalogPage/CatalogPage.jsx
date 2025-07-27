@@ -42,8 +42,6 @@ export default function CatalogPage() {
   const autoListRef = useRef(null);
 
   useEffect(() => {
-    dispatch(clearAuto());
-
     dispatch(
       fetchAuto({
         page,

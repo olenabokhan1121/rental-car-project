@@ -23,7 +23,7 @@ A modern web application for **RentalCar**, a car rental company. This frontend 
 
 ## 🔗 Live Demo
 
-[🔗 View deployed site on Vercel](https://your-vercel-url.vercel.app)
+[🔗 View deployed site on Vercel](https://rental-car-project-n3u3.vercel.app/)
 
 ## 📦 Installation
 

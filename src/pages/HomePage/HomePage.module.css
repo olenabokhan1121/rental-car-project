@@ -1,0 +1,18 @@
+.overlay {
+  background-image: url("/images/hero/Banner.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 700px; /* або інша висота */
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .banner {
+    background-image: url("/images/hero/Banner@2x.jpg");
+  }
+}

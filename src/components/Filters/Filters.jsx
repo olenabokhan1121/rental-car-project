@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./Filters.module.css";
 import { formatMileage } from "../../utils.js";
-const Filters = ({ cars, prices, onChange }) => {
+const Filters = ({ cars, prices, onChange, onApply }) => {
   const [filters, setFilters] = useState({
     brand: "",
     rentalPrice: "",
