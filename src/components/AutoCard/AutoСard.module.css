@@ -1,10 +1,28 @@
-.inlineText {
-  display: flex;
-  gap: 12px;
+.heart {
+  background-color: transparent;
+}
+.heart:active,
+.heart:focus {
+  background-color: transparent;
+  box-shadow: none;
 }
 
-.inlineText span:not(:last-child)::after {
-  content: "|";
-  margin-left: 12px;
-  color: #999;
+.icon:hover {
+  fill: var(--button-hover);
+}
+
+.imageWrapper {
+  width: 276px;
+  height: 268px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageWrapper .imageCard {
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+  display: block;
 }

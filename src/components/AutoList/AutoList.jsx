@@ -8,15 +8,17 @@ const AutoList = forwardRef(({ auto, loading, startIndex }, ref) => {
   }
 
   return (
-    <div className={styles.list}>
+    <ul className={styles.list}>
       {auto.map((car, index) => {
         const isFirstNew = startIndex !== null && index === startIndex;
 
         return (
-          <AutoCard key={car.id} ref={isFirstNew ? ref : null} car={car} />
+          <li key={car.id} className={styles.li}>
+            <AutoCard ref={isFirstNew ? ref : null} car={car} />
+          </li>
         );
       })}
-    </div>
+    </ul>
   );
 });
 AutoList.displayName = "AutoList";

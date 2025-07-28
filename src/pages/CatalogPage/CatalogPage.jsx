@@ -112,9 +112,11 @@ export default function CatalogPage() {
         )}
         {
           <div>
-            {page * 12 < totalItems && !loading && (
-              <LoadMoreBtn onClick={loadMore} />
-            )}
+            {
+              /*page * 12 < totalItems &&*/ !loading && (
+                <LoadMoreBtn onClick={loadMore} />
+              )
+            }
           </div>
         }
       </section>

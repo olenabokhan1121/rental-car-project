@@ -9,7 +9,7 @@ import { toggleFavoriteAutoAsync } from "../../redux/auto/operations.js";
 
 import { clearAuto } from "../../redux/auto/slice.js";
 import { selectFavorite } from "../../redux/auto/selectors.js";
-
+import { formatMileage } from "../../utils.js";
 const AutoCard = forwardRef(({ car }, ref) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -44,16 +44,20 @@ const AutoCard = forwardRef(({ car }, ref) => {
       }
     }
   };
+  const formatAdress = address.split(",").map((part) => part.trim());
+  const formatedAdress = `${formatAdress[1]} | ${formatAdress[2]}`;
 
   return (
     <div ref={ref} className={styles.Card}>
-      <img src={img} alt={brand} className={styles.imageCard} />
+      <div className={styles.imageWrapper}>
+        <img src={img} alt={brand} className={styles.imageCard} />
+      </div>
       <button
         onClick={handleToggle}
         className={styles.heart}
         aria-label={isFavorite ? "Remove" : "Add to favorites"}
       >
-        <svg width="16" height="16">
+        <svg className={styles.icon} width="16" height="16">
           <use
             href={
               isFavorite
@@ -68,10 +72,10 @@ const AutoCard = forwardRef(({ car }, ref) => {
         <p className={styles.price}>{`$${rentalPrice}`}</p>
       </div>
       <div className={styles.inlineDetails}>
-        <span>{address}</span>
-        <span>{rentalCompany}</span>
-        <span>{type}</span>
-        <span>{mileage}</span>
+        <span>{`${formatedAdress} | `}</span>
+        <span>{`${rentalCompany} | `}</span>
+        <span>{`${type} | `}</span>
+        <span>{formatMileage(mileage)}</span>
       </div>
 
       <div className={styles.formButton}>
