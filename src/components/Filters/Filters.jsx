@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./Filters.module.css";
-import { formatMileage } from "../../utils.js";
+import { inputformatMileage } from "../../utils.js";
 const Filters = ({ cars, prices, onChange, onApply }) => {
   const [filters, setFilters] = useState({
     brand: "",
@@ -22,8 +22,8 @@ const Filters = ({ cars, prices, onChange, onApply }) => {
   return (
     <div className={styles.filtersWrapper}>
       <div className={styles.dropdownContent}>
-        <label>
-          Car brand
+        <label className={styles.label}>
+          <span className={styles.labelText}>Car brand</span>
           <select
             name="brand"
             className={styles.filterSelect}
@@ -38,47 +38,62 @@ const Filters = ({ cars, prices, onChange, onApply }) => {
             ))}
           </select>
         </label>
-        <label>
-          Price/ 1 hour
-          <select
-            name="rentalPrice"
-            className={styles.filterSelect}
-            value={filters.rentalPrice}
-            onChange={handleInputChange}
-          >
-            <option value="">Choose a price</option>
-            {prices.map((veh) => (
-              <option key={veh} value={veh}>
-                {veh}
-              </option>
-            ))}
-          </select>
+        <label className={styles.label}>
+          <span className={styles.labelText}>Price/ 1 hour</span>
+          <div className={styles.selectWrapper}>
+            <select
+              name="rentalPrice"
+              className={styles.nativeSelect}
+              value={filters.rentalPrice}
+              onChange={handleInputChange}
+            >
+              <option value="">Choose a price</option>
+              {prices.map((veh) => (
+                <option key={veh} value={veh}>
+                  {veh}
+                </option>
+              ))}
+            </select>
+            <div className={styles.customOverlay}>
+              {filters.rentalPrice
+                ? `To $${filters.rentalPrice}`
+                : "Choose a price"}
+            </div>
+          </div>
         </label>
-        <label>
-          Сar mileage / km
-          <input
-            type="number"
-            name="minMileage"
-            value={filters.minMileage}
-            onChange={handleInputChange}
-            placeholder="From"
-          />
-          <span className={styles.mileagePreview}>
-            {formatMileage(filters.minMileage)}
-          </span>
-        </label>
-        <label>
-          <input
-            type="number"
-            name="maxMileage"
-            value={filters.maxMileage}
-            onChange={handleInputChange}
-            placeholder="To"
-          />
-          <span className={styles.mileagePreview}>
-            {formatMileage(filters.maxMileage)}
-          </span>
-        </label>
+        <div>
+          <label className={styles.label}>
+            <span className={styles.labelText}>Сar mileage / km</span>
+            <div className="input-group">
+              <div className="input-box">
+                <input
+                  type="number"
+                  name="minMileage"
+                  value={filters.minMileage}
+                  onChange={handleInputChange}
+                  placeholder="From"
+                />
+                <span className={styles.mileagePreview}>
+                  {`From
+                  ${inputformatMileage(filters.minMileage)}`}
+                </span>
+              </div>
+              <div className="input-box">
+                <input
+                  type="number"
+                  name="maxMileage"
+                  value={filters.maxMileage}
+                  onChange={handleInputChange}
+                  placeholder="To"
+                />
+                <span className={styles.mileagePreview}>
+                  {`To
+                  ${inputformatMileage(filters.maxMileage)}`}
+                </span>
+              </div>
+            </div>
+          </label>
+        </div>
         <button onClick={handleSearchClick}>Search</button>
       </div>
     </div>

@@ -7,3 +7,8 @@ export const formatMileage = (value) => {
   if (!value) return "";
   return `${new Intl.NumberFormat("en-US").format(Number(value))} km`;
 };
+
+export const inputformatMileage = (value) => {
+  if (!value) return "";
+  return Number(value).toLocaleString("en-US");
+};
