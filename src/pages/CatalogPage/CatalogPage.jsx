@@ -32,12 +32,12 @@ export default function CatalogPage() {
   const searchQuery = useSelector((state) => state.filters);
   const [startIndex, setStartIndex] = useState(null);
   const [page, setPage] = useState(1);
-  const [selectedFilters, setSelectedFilters] = useState({
+  /*const [selectedFilters, setSelectedFilters] = useState({
     brand: "",
     rentalPrice: "",
     minMileage: "",
     maxMileage: "",
-  });
+  });*/
 
   const autoListRef = useRef(null);
 
@@ -46,15 +46,39 @@ export default function CatalogPage() {
       fetchAuto({
         page,
         append: page > 1 && true,
+        filters: searchQuery,
       })
     ).unwrap();
-  }, [dispatch, page, searchQuery]);
+  }, [dispatch, page]);
 
-  const handleApplyFilters = () => {
-    dispatch(setBrand(selectedFilters.brand));
-    dispatch(setRentalPrice(selectedFilters.rentalPrice));
-    dispatch(setMinMileage(selectedFilters.minMileage));
-    dispatch(setMaxMileage(selectedFilters.maxMileage));
+  const handleApplyFilters = (filters) => {
+    const parsedMin = parseInt(filters.minMileage, 10);
+    const parsedMax = parseInt(filters.maxMileage, 10);
+
+    // Перевірка: якщо обидва введені і min > max, просто повертаємо (або покажемо повідомлення)
+    if (!isNaN(parsedMin) && !isNaN(parsedMax) && parsedMin > parsedMax) {
+      alert("Minimum mileage cannot be greater than maximum mileage.");
+      return;
+    }
+    const validFilters = {
+      ...filters,
+      minMileage: isNaN(parsedMin) ? "" : parsedMin,
+      maxMileage: isNaN(parsedMax) ? "" : parsedMax,
+    };
+    dispatch(clearAuto());
+    setPage(1);
+    dispatch(setBrand(validFilters.brand));
+    dispatch(setRentalPrice(validFilters.rentalPrice));
+    dispatch(setMinMileage(validFilters.minMileage));
+    dispatch(setMaxMileage(validFilters.maxMileage));
+
+    dispatch(
+      fetchAuto({
+        page: 1,
+        append: false,
+        filters: validFilters,
+      })
+    );
   };
   const handleChangeFilters = (newFilters) => {
     setSelectedFilters(newFilters);
@@ -88,6 +112,9 @@ export default function CatalogPage() {
     }
   }, [loading, cars, startIndex]);
   const autoToShow = cars.slice(0, page * 12);
+  console.log("totalItems", totalItems);
+  console.log("cars.length", cars.length);
+  console.log("page", page);
 
   return (
     <div className={css.homePage}>
@@ -112,11 +139,9 @@ export default function CatalogPage() {
         )}
         {
           <div>
-            {
-              /*page * 12 < totalItems &&*/ !loading && (
-                <LoadMoreBtn onClick={loadMore} />
-              )
-            }
+            {page * 12 < totalItems && !loading && (
+              <LoadMoreBtn onClick={loadMore} />
+            )}
           </div>
         }
       </section>

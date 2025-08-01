@@ -4,18 +4,11 @@ import { getFilteredParams } from "../../utils.js";
 
 export const fetchAuto = createAsyncThunk(
   "auto/fetchAuto",
-  async ({ page = 1, limit = 12, append = false } = {}, thunkAPI) => {
+  async (
+    { page = 1, limit = 12, append = false, filters = {} } = {},
+    thunkAPI
+  ) => {
     try {
-      const filters = thunkAPI.getState().filters;
-      /*const params = {
-        page,
-        limit,
-        brand: filters.brand,
-        rentalPrice: filters.rentalPrice,
-        minMileage: filters.minMileage,
-        maxMileage: filters.maxMileage,
-      };*/
-
       const params = {
         page,
         limit,
@@ -28,7 +21,7 @@ export const fetchAuto = createAsyncThunk(
 
       return {
         items: response.data.cars,
-        totalItems: response.data.totalItems,
+        totalItems: response.data.totalCars,
         append,
       };
     } catch (error) {

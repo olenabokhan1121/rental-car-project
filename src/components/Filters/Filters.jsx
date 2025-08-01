@@ -16,8 +16,7 @@ const Filters = ({ cars, prices, onChange, onApply }) => {
     }));
   };
   const handleSearchClick = () => {
-    onChange(filters); // передаємо фільтри в CatalogPage
-    onApply();
+    onApply(filters);
   };
 
   return (
